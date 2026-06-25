@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Mail Reply</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 260px;
+      background: #0f1117;
+      color: #e8eaf0;
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+      font-size: 13px;
+      padding: 20px 18px;
+    }
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .logo {
+      width: 34px;
+      height: 34px;
+      background: #6366f1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .title { font-size: 15px; font-weight: 700; letter-spacing: 0.2px; }
+    .subtitle { font-size: 11px; color: #6b7280; margin-top: 1px; }
+    .divider { border: none; border-top: 1px solid #2a2d3a; margin: 12px 0; }
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: #161922;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #6366f1;
+      margin-right: 7px;
+    }
+    .status-label { font-size: 12px; color: #9ca3af; display: flex; align-items: center; }
+    .open-btn {
+      width: 100%;
+      padding: 10px;
+      background: #6366f1;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+      transition: background 0.15s;
+    }
+    .open-btn:hover { background: #5457e5; }
+    .secondary-btn {
+      width: 100%;
+      padding: 8px;
+      background: #161922;
+      border: 1px solid #2a2d3a;
+      border-radius: 8px;
+      color: #9ca3af;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .secondary-btn:hover { border-color: #353846; color: #e8eaf0; }
+    .supported {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+    .supported b { color: #9ca3af; font-weight: 600; display: block; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div class="logo-row">
+    <div class="logo">✦</div>
+    <div>
+      <div class="title">AI Mail Reply</div>
+      <div class="subtitle">AI 邮件回复助手</div>
+    </div>
+  </div>
+
+  <div class="status-row">
+    <span class="status-label"><span class="status-dot"></span>插件运行中</span>
+    <span id="mail-detected" style="font-size:11px;color:#6b7280">检测邮件中...</span>
+  </div>
+
+  <button class="open-btn" id="open-panel-btn">✦ 打开 AI 回复面板</button>
+  <button class="secondary-btn" id="options-btn">⚙ 设置 API Key 与 Skill</button>
+
+  <div class="supported">
+    <b>支持的邮箱</b>
+    网易 163 · 126 · yeah.net · QQ 邮箱 · Gmail · Outlook
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "manifest_version": 3,
+  "name": "AI Mail Reply",
+  "version": "1.2.0",
+  "description": "在邮箱中直接使用 AI 回复邮件，支持多 AI 服务商和自定义 Skill",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "background": {
+    "service_worker": "background/service_worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content/net_interceptor.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": [
+        "content/lib/pdf.min.js",
+        "content/attachment_reader.js",
+        "content/content.js"
+      ],
+      "css": ["content/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["content/lib/pdf.worker.min.js"],
+      "matches": ["https://*/*", "http://*/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

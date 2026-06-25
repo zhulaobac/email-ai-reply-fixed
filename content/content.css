@@ -1,0 +1,932 @@
+/* AI Mail Reply - Content Styles
+ * 设计系统：克制专业 · 单强调色
+ * 强调色 #6366f1（唯一）· 圆角 8px(控件)/12px(容器) · 字阶 10/12/13/15
+ * 去渐变 · 去多彩 · 服务商纯文字标识
+ */
+
+/* ── 设计 tokens（注释用，不引 CSS 变量以免污染宿主页）──────────────────────
+ * bg-base   #0f1117   面板底
+ * bg-1      #161922   次级容器
+ * bg-2      #1e2130   输入/选中容器
+ * border    #2a2d3a   分隔线
+ * border-2  #353846   hover 描边
+ * ink       #e8eaf0   主文字
+ * ink-2     #c4c9d9   次文字
+ * ink-3     #9ca3af   弱文字
+ * ink-4     #6b7280   占位
+ * ink-5     #4b5563   最弱
+ * accent    #6366f1   唯一强调
+ * accent-2  #a5b4fc   强调浅
+ * danger    #ef4444   错误（唯一非强调语义色）
+ * ──────────────────────────────────────────────────────────────────────── */
+
+#ai-mail-panel {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 420px;
+  max-height: 85vh;
+  background: #0f1117;
+  border: 1px solid #2a2d3a;
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  font-size: 13px;
+  color: #e8eaf0;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+#ai-mail-panel.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+}
+
+/* Header */
+#ai-mail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: #131620;
+  border-bottom: 1px solid #2a2d3a;
+  cursor: move;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+#ai-mail-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#ai-mail-logo {
+  width: 26px;
+  height: 26px;
+  background: #6366f1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+#ai-mail-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e8eaf0;
+  letter-spacing: 0.2px;
+}
+
+#ai-mail-header-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ai-mail-icon-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+
+.ai-mail-icon-btn:hover {
+  background: #1e2130;
+  color: #e8eaf0;
+}
+
+/* Tabs — 左侧「✦回复」「🔍分析」，右侧「我的Skill」「设置」 */
+#ai-mail-tabs {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 0;
+  background: #0f1117;
+  border-bottom: 1px solid #1e2130;
+  flex-shrink: 0;
+  height: 38px;
+}
+
+.ai-mail-tab-spacer { flex: 1; }
+
+.ai-mail-tab {
+  padding: 0 11px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ai-mail-tab.active {
+  color: #818cf8;
+  border-bottom-color: #818cf8;
+}
+
+.ai-mail-tab:hover:not(.active) { color: #a5b4fc; }
+
+/* Secondary tabs (我的Skill / 设置) smaller & dimmer */
+.ai-mail-tab.secondary {
+  font-size: 11px;
+  color: #4b5563;
+}
+
+.ai-mail-tab.secondary.active {
+  color: #818cf8;
+  border-bottom-color: #818cf8;
+}
+
+.ai-mail-tab.secondary:hover:not(.active) { color: #9ca3af; }
+
+/* Divider — no longer used */
+.ai-mail-tab-divider { display: none; }
+
+/* Mode switcher — now replaced by tab bar, hide if still in DOM */
+#ai-mail-mode-switcher { display: none; }
+
+.ai-mail-mode-btn {
+  flex: 1;
+  padding: 7px 0;
+  border: 1px solid #2a2d3a;
+  background: transparent;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  font-family: inherit;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.ai-mail-mode-btn.active {
+  color: #a5b4fc;
+  border-color: #6366f1;
+  background: rgba(99,102,241,0.10);
+}
+
+.ai-mail-mode-btn:hover:not(.active) {
+  color: #c4c9d9;
+  border-color: #353846;
+}
+
+/* Body */
+#ai-mail-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2d3a transparent;
+}
+
+#ai-mail-body::-webkit-scrollbar { width: 4px; }
+#ai-mail-body::-webkit-scrollbar-track { background: transparent; }
+#ai-mail-body::-webkit-scrollbar-thumb { background: #2a2d3a; border-radius: 2px; }
+
+/* Tab panels */
+.ai-mail-panel-tab { display: none; flex-direction: column; gap: 12px; }
+.ai-mail-panel-tab.active { display: flex; }
+
+/* Email preview translate hint */
+#preview-translate-hint {
+  font-size: 9px;
+  color: #4b5563;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  margin-left: 2px;
+}
+
+/* Translation tooltip — appears below/inside the preview card */
+#ai-mail-translate-tooltip {
+  display: none;
+  margin-top: 8px;
+  background: #0d1117;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #d1d5db;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2d3a transparent;
+  position: relative;
+}
+
+#ai-mail-translate-tooltip::before {
+  content: '🌐 中文译文';
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #6366f1;
+  margin-bottom: 6px;
+}
+
+#ai-mail-translate-tooltip.visible {
+  display: block;
+  animation: ai-fade-in 0.15s ease;
+}
+
+@keyframes ai-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Email preview — 紧凑版 */
+#ai-mail-email-preview {
+  background: #161922;
+  border: 1px solid #2a2d3a;
+  border-radius: 10px;
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+
+.ai-mail-preview-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #6366f1;
+  margin-bottom: 4px;
+}
+
+.ai-mail-preview-meta {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 1px;
+}
+
+.ai-mail-preview-meta span {
+  color: #c4c9d9;
+  font-weight: 500;
+}
+
+.ai-mail-preview-text {
+  font-size: 11px;
+  color: #6b7280;
+  line-height: 1.55;
+  margin-top: 4px;
+  max-height: 60px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* Section label */
+.ai-mail-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+}
+
+/* Provider selector — 纯文字按钮，5 列平铺，单色选中态 */
+.ai-mail-provider-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.ai-mail-provider-btn {
+  padding: 9px 4px;
+  border: 1px solid #2a2d3a;
+  background: #161922;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  color: #9ca3af;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ai-mail-provider-btn:hover {
+  border-color: #353846;
+  color: #c4c9d9;
+}
+
+.ai-mail-provider-btn.active {
+  border-color: #6366f1;
+  background: rgba(99,102,241,0.12);
+  color: #a5b4fc;
+}
+
+/* Skill selector */
+.ai-mail-skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 120px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2d3a transparent;
+}
+
+.ai-mail-skill-item {
+  padding: 7px 10px;
+  border: 1px solid #2a2d3a;
+  background: #161922;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.ai-mail-skill-item:hover { border-color: #353846; }
+.ai-mail-skill-item.active { border-color: #6366f1; background: rgba(99,102,241,0.10); }
+
+.ai-mail-skill-emoji { font-size: 13px; flex-shrink: 0; line-height: 1; }
+
+.ai-mail-skill-info { flex: 1; min-width: 0; }
+
+.ai-mail-skill-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #c4c9d9;
+  margin-bottom: 0;
+}
+
+.ai-mail-skill-desc {
+  font-size: 10px;
+  color: #6b7280;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ai-mail-skill-item.active .ai-mail-skill-name { color: #a5b4fc; }
+
+/* Extra instruction — both reply and analyze textareas share the same style */
+#ai-mail-instruction,
+#ai-mail-analyze-instruction {
+  width: 100%;
+  background: #161922;
+  border: 1px solid #2a2d3a;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #e8eaf0;
+  font-size: 12px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+  line-height: 1.55;
+  min-height: 110px;
+}
+
+#ai-mail-instruction:focus,
+#ai-mail-analyze-instruction:focus { border-color: #6366f1; }
+
+#ai-mail-instruction::placeholder,
+#ai-mail-analyze-instruction::placeholder { color: #4b5563; }
+
+/* Generate button — 纯色实底，无渐变 */
+#ai-mail-generate-btn {
+  width: 100%;
+  padding: 11px;
+  background: #6366f1;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s, transform 0.1s;
+  font-family: inherit;
+  letter-spacing: 0.2px;
+}
+
+#ai-mail-generate-btn:hover { background: #5457e5; }
+#ai-mail-generate-btn:active,
+#ai-mail-analyze-btn:active { transform: scale(0.98); }
+
+#ai-mail-generate-btn:disabled,
+#ai-mail-analyze-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Analyze button — same style as generate but teal accent */
+#ai-mail-analyze-btn {
+  width: 100%;
+  padding: 11px;
+  background: #0d9488;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s, transform 0.1s;
+  font-family: inherit;
+  letter-spacing: 0.2px;
+}
+
+#ai-mail-analyze-btn:hover { background: #0f766e; }
+
+/* Loading */
+.ai-mail-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ai-spin 0.7s linear infinite;
+}
+
+@keyframes ai-spin { to { transform: rotate(360deg); } }
+
+/* Result area */
+#ai-mail-result-area {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#ai-mail-result-area.visible { display: flex; }
+
+/* Result label row */
+.ai-mail-result-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #6b7280;
+  gap: 8px;
+}
+
+#ai-mail-selection-hint {
+  font-size: 11px;
+  color: #f59e0b;
+  flex: 1;
+  text-align: right;
+}
+
+#ai-mail-result-text {
+  background: #161922;
+  border: 1px solid #2a2d3a;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 13px;
+  color: #d1d5db;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  max-height: 220px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2d3a transparent;
+  /* Allow editing & selection */
+  cursor: text;
+  outline: none;
+  caret-color: #818cf8;
+}
+
+#ai-mail-result-text:focus {
+  border-color: #4b5563;
+}
+
+/* Refine highlight — persists after focus moves away */
+mark.ai-refine-highlight {
+  background: rgba(245, 158, 11, 0.35);
+  color: inherit;
+  border-radius: 3px;
+  padding: 1px 0;
+  box-shadow: 0 0 0 1.5px rgba(245, 158, 11, 0.6);
+  text-decoration: none;
+}
+
+/* Refine button — amber accent */
+.ai-mail-action-btn.refine {
+  color: #f59e0b;
+  border-color: rgba(245,158,11,0.4);
+  background: rgba(245,158,11,0.08);
+}
+
+.ai-mail-action-btn.refine:hover {
+  background: rgba(245,158,11,0.15);
+  border-color: #f59e0b;
+}
+
+.ai-mail-result-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ai-mail-action-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #2a2d3a;
+  background: #161922;
+  color: #9ca3af;
+  transition: border-color 0.15s, color 0.15s;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.ai-mail-action-btn:hover { border-color: #353846; color: #e8eaf0; }
+
+.ai-mail-action-btn.primary {
+  background: #6366f1;
+  border-color: transparent;
+  color: #fff;
+}
+
+.ai-mail-action-btn.primary:hover { background: #5457e5; }
+
+/* Error — 唯一保留的非强调语义色（danger red） */
+.ai-mail-error {
+  background: rgba(239,68,68,0.10);
+  border: 1px solid rgba(239,68,68,0.30);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #fca5a5;
+  display: none;
+}
+
+.ai-mail-error.visible { display: block; }
+
+/* Skills tab */
+.ai-skill-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ai-skill-form input,
+.ai-skill-form textarea,
+.ai-skill-form select {
+  width: 100%;
+  background: #161922;
+  border: 1px solid #2a2d3a;
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: #e8eaf0;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.ai-skill-form input:focus,
+.ai-skill-form textarea:focus,
+.ai-skill-form select:focus {
+  border-color: #6366f1;
+}
+
+.ai-skill-form input::placeholder,
+.ai-skill-form textarea::placeholder {
+  color: #4b5563;
+}
+
+.ai-skill-form textarea { resize: vertical; min-height: 76px; line-height: 1.55; }
+
+.ai-skill-save-btn {
+  padding: 9px;
+  background: #6366f1;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.ai-skill-save-btn:hover { background: #5457e5; }
+
+.ai-skill-saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ai-skill-saved-item {
+  padding: 10px 12px;
+  background: #161922;
+  border: 1px solid #2a2d3a;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ai-skill-saved-name {
+  font-size: 12px;
+  color: #c4c9d9;
+  font-weight: 500;
+  flex: 1;
+}
+
+.ai-skill-del-btn {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: #4b5563;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+
+.ai-skill-del-btn:hover { background: rgba(239,68,68,0.15); color: #fca5a5; }
+
+/* Provider link labels in settings */
+a.ai-provider-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #6b7280;
+  text-decoration: none;
+  cursor: pointer;
+  width: fit-content;
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin-left: -4px;
+  transition: color 0.15s, background 0.15s;
+}
+
+a.ai-provider-link:hover {
+  color: #818cf8;
+  background: rgba(99,102,241,0.10);
+}
+
+a.ai-provider-link:hover .ai-link-icon {
+  opacity: 1;
+}
+
+.ai-link-icon {
+  font-size: 10px;
+  opacity: 0.4;
+  transition: opacity 0.15s;
+  font-style: normal;
+}
+
+/* Settings tab */
+.ai-settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ai-settings-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-settings-row label {
+  font-size: 11px;
+  color: #9ca3af;
+  width: 70px;
+  flex-shrink: 0;
+}
+
+.ai-settings-row input,
+.ai-settings-row select {
+  flex: 1;
+  background: #161922;
+  border: 1px solid #2a2d3a;
+  border-radius: 8px;
+  padding: 7px 10px;
+  color: #e8eaf0;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.ai-settings-row input:focus,
+.ai-settings-row select:focus { border-color: #6366f1; }
+
+.ai-settings-save-btn {
+  width: 100%;
+  padding: 9px;
+  background: #6366f1;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 4px;
+}
+
+.ai-settings-save-btn:hover { background: #5457e5; }
+
+.ai-settings-hint {
+  font-size: 11px;
+  color: #6b7280;
+  line-height: 1.55;
+  padding: 9px 11px;
+  background: #161922;
+  border-radius: 8px;
+  border-left: 2px solid #6366f1;
+}
+
+/* Floating toggle button — 纯色实底 */
+#ai-mail-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  background: #6366f1;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 999998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 8px 24px rgba(99,102,241,0.35);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.15s;
+}
+
+#ai-mail-toggle:hover {
+  transform: scale(1.08);
+  background: #5457e5;
+  box-shadow: 0 12px 32px rgba(99,102,241,0.45);
+}
+
+#ai-mail-toggle.panel-open { display: none; }
+
+/* Toast */
+.ai-mail-toast {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  background: #161922;
+  border: 1px solid #2a2d3a;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 12px;
+  color: #a5b4fc;
+  z-index: 9999999;
+  animation: ai-toast-in 0.2s ease;
+}
+
+@keyframes ai-toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Attachment badge */
+.ai-mail-attach-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.30);
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 10px;
+  color: #a5b4fc;
+  margin-top: 5px;
+}
+
+/* ── Analyze button ─────────────────────────────────────────────────────── */
+#ai-mail-analyze-btn {
+  padding: 11px 14px;
+  background: #161922;
+  border: 1px solid #2a2d3a;
+  border-radius: 8px;
+  color: #c4c9d9;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: border-color 0.15s, color 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+#ai-mail-analyze-btn:hover { border-color: #6366f1; color: #a5b4fc; }
+#ai-mail-analyze-btn:active { transform: scale(0.97); }
+#ai-mail-analyze-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Analyze result area ────────────────────────────────────────────────── */
+#ai-mail-analyze-area {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+#ai-mail-analyze-area.visible { display: flex; }
+
+.ai-mail-analyze-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #6366f1;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+#ai-mail-analyze-text {
+  background: #161922;
+  border: 1px solid #2a2d3a;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 12px;
+  color: #c4c9d9;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  max-height: 280px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2d3a transparent;
+}
+
+/* (analyze-skill-section removed — now handled by skill sub-tabs) */
+
+/* ── Skill type toggle buttons (in Skills tab) ─────────────────────────── */
+.ai-skill-type-btn {
+  flex: 1;
+  padding: 7px 10px;
+  border: 1px solid #2a2d3a;
+  background: #161922;
+  border-radius: 8px;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.ai-skill-type-btn.active {
+  border-color: #6366f1;
+  background: rgba(99,102,241,0.12);
+  color: #a5b4fc;
+}
+.ai-skill-type-btn:hover:not(.active) { border-color: #353846; color: #c4c9d9; }

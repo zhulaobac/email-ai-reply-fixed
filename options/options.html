@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Mail Reply - 设置</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0a0c10;
+      color: #e8eaf0;
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+      padding: 40px 0;
+    }
+    .container { max-width: 640px; margin: 0 auto; padding: 0 24px; }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .logo {
+      width: 44px; height: 44px;
+      background: #6366f1;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    h1 { font-size: 20px; font-weight: 700; letter-spacing: 0.2px; }
+    .subtitle { font-size: 12px; color: #6b7280; margin-top: 2px; }
+    .card {
+      background: #13151f;
+      border: 1px solid #1e2130;
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #c4c9d9;
+      margin-bottom: 16px;
+    }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 12px; color: #9ca3af; margin-bottom: 5px; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: #161922;
+      border: 1px solid #2a2d3a;
+      border-radius: 8px;
+      padding: 9px 12px;
+      color: #e8eaf0;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: #6366f1;
+    }
+    .field textarea { min-height: 90px; resize: vertical; line-height: 1.5; }
+    .save-btn {
+      width: 100%;
+      padding: 11px;
+      background: #6366f1;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 6px;
+      letter-spacing: 0.2px;
+      transition: background 0.15s;
+    }
+    .save-btn:hover { background: #5457e5; }
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #161922;
+      border: 1px solid #2a2d3a;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 13px;
+      color: #a5b4fc;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .toast.show { opacity: 1; }
+    .hint {
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+    .hint a { color: #6366f1; text-decoration: none; }
+    .hint a:hover { color: #818cf8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">✦</div>
+      <div>
+        <h1>AI Mail Reply 设置</h1>
+        <div class="subtitle">配置 API Key 和默认选项</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Claude · Anthropic</div>
+      <div class="field">
+        <label>API Key</label>
+        <input type="password" id="claude-key" placeholder="sk-ant-api03-...">
+      </div>
+      <div class="field">
+        <label>默认模型</label>
+        <select id="claude-model">
+          <option value="claude-sonnet-4-6">claude-sonnet-4-6（推荐，速度与质量均衡）</option>
+          <option value="claude-opus-4-6">claude-opus-4-6（最强，较慢）</option>
+          <option value="claude-haiku-4-5-20251001">claude-haiku-4-5（最快，成本低）</option>
+        </select>
+      </div>
+      <div class="hint">获取 API Key：<a href="https://console.anthropic.com/keys" target="_blank">console.anthropic.com</a></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">OpenAI · GPT</div>
+      <div class="field">
+        <label>API Key</label>
+        <input type="password" id="openai-key" placeholder="sk-...">
+      </div>
+      <div class="field">
+        <label>默认模型</label>
+        <select id="openai-model">
+          <option value="gpt-4o">gpt-4o（推荐）</option>
+          <option value="gpt-4o-mini">gpt-4o-mini（快速省钱）</option>
+          <option value="gpt-4-turbo">gpt-4-turbo</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">DeepSeek</div>
+      <div class="field">
+        <label>API Key</label>
+        <input type="password" id="deepseek-key" placeholder="sk-...">
+      </div>
+      <div class="hint">DeepSeek 价格极低，适合高频使用。<a href="https://platform.deepseek.com" target="_blank">获取 Key</a></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Gemini · Google</div>
+      <div class="field">
+        <label>API Key</label>
+        <input type="password" id="gemini-key" placeholder="AIza...">
+      </div>
+      <div class="hint"><a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio 获取免费 Key</a></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">智谱 GLM · 国内可用</div>
+      <div class="field">
+        <label>API Key</label>
+        <input type="password" id="glm-key" placeholder="xxxxxx.xxxxxx（id.secret 格式）">
+      </div>
+      <div class="field">
+        <label>默认模型</label>
+        <select id="glm-model">
+          <option value="glm-4-flash">glm-4-flash（免费·推荐）</option>
+          <option value="glm-4-plus">glm-4-plus（旗舰，最强）</option>
+          <option value="glm-4-air">glm-4-air（均衡）</option>
+          <option value="glm-4-airx">glm-4-airx（极速）</option>
+        </select>
+      </div>
+      <div class="hint">
+        glm-4-flash 完全免费，适合日常邮件回复。<br>
+        获取 Key：<a href="https://open.bigmodel.cn/usercenter/apikeys" target="_blank">open.bigmodel.cn</a>（注册即送额度）
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="card-title">邮箱域名管理</div>
+      <p style="font-size:12px;color:#9ca3af;margin-bottom:14px;line-height:1.6">
+        插件只在以下域名的页面显示 AI 回复按钮。可自由添加或删除。
+      </p>
+      <div id="domain-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="new-domain" placeholder="输入域名，如 mail.example.com" style="flex:1;background:#161922;border:1px solid #2a2d3a;border-radius:8px;padding:9px 12px;color:#e8eaf0;font-size:13px;font-family:inherit;outline:none">
+        <button id="add-domain-btn" style="padding:9px 16px;background:#6366f1;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap">+ 添加</button>
+      </div>
+      <div style="font-size:11px;color:#6b7280;margin-top:10px;line-height:1.6;padding:8px 10px;background:#161922;border-radius:8px;border-left:2px solid #6366f1">
+        修改域名后需刷新对应邮箱页面才能生效。
+      </div>
+    </div>
+
+    <button class="save-btn" id="save-btn">💾 保存所有设置</button>
+  </div>
+
+  <div class="toast" id="toast">✅ 设置已保存</div>
+
+  <script src="options.js"></script>
+</body>
+</html>
