@@ -437,8 +437,22 @@
   toggle.addEventListener('click', openPanel);
   document.getElementById('ai-mail-close-btn').addEventListener('click', closePanel);
   document.getElementById('ai-mail-refresh-btn').addEventListener('click', () => {
+    // Re-read email
     readEmail();
     debugDumpDOM();
+
+    // Clear reply mode
+    document.getElementById('ai-mail-instruction').value = '';
+    document.getElementById('ai-mail-result-text').textContent = '';
+    document.getElementById('ai-mail-result-area').classList.remove('visible');
+    clearError();
+    clearResultSelection();
+
+    // Clear analyze mode
+    document.getElementById('ai-mail-analyze-instruction').value = '';
+    document.getElementById('ai-mail-analyze-text').textContent = '';
+    document.getElementById('ai-mail-analyze-area').classList.remove('visible');
+    clearAnalyzeError();
   });
 
   function debugDumpDOM() {
