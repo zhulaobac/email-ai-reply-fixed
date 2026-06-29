@@ -625,14 +625,17 @@
               console.log('[AI Mail Reply] menu invocation failed:', e && e.message);
             }
 
-            // Last resort: a REAL native click on the item. antd attaches its own
-            // click listener to the document that closes the menu, but the item's
-            // own click handler still fires first. We do NOT stop propagation of
-            // the item's click — we WANT the SPA's download/preview handler to run.
+            // Last resort: a REAL native click on the item.
             if (!triggered) {
               console.log('[AI Mail Reply] fallback: native .click() on menu item');
               try { targetItem.click(); triggered = true; } catch (_) {}
             }
+
+            // ── Activate intercept flag before polling ───────────────────────
+            // This tells net_interceptor to suppress window.open (we're reading
+            // the PDF ourselves). Without the flag, user-initiated Preview clicks
+            // would also be suppressed.
+            window.__aiMailInterceptActive__ = true;
 
             // Poll up to 6s for net_interceptor to register the PDF URL/blob.
             const pdfUrlCountBefore = readPdfUrlStore().length;
@@ -688,6 +691,9 @@
           }
         }
 
+        // ── Deactivate intercept flag ────────────────────────────────────────
+        window.__aiMailInterceptActive__ = false;
+
         // Close the overlay via Escape (antd listens for it; cleaner than body click).
         try { overlay.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); } catch (_) {}
         await sleep(50);
@@ -699,6 +705,7 @@
       }
       return url;
     } catch (e) {
+      window.__aiMailInterceptActive__ = false; // always clean up on error
       console.log('[AI Mail Reply] findUrlByDropdownClick error:', e && e.message);
       return '';
     }

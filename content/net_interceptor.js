@@ -220,11 +220,14 @@
   }, true);
 
   // Also watch for programmatic <a>.click() by overriding HTMLAnchorElement.click.
+  // IMPORTANT: Only suppress the download when the plugin is actively reading an
+  // attachment (__aiMailInterceptActive__). Otherwise always call the original so
+  // downloads on other websites (or user-initiated downloads) work normally.
   const _origAnchorClick = HTMLAnchorElement.prototype.click;
   HTMLAnchorElement.prototype.click = function () {
     const href = this.getAttribute('href') || '';
     const download = this.getAttribute('download') || '';
-    if (href.startsWith('blob:') || download) {
+    if ((href.startsWith('blob:') || download) && window.__aiMailInterceptActive__) {
       const filename = download || filenameFromBlobHref(href);
       const blob = _pendingBlob;
       if (blob) {
@@ -232,26 +235,25 @@
         const reader = new FileReader();
         reader.onload = function () { storeBlobForName(filename || href, reader.result); };
         reader.readAsDataURL(blob);
-        console.log('[AI Mail Reply] net_interceptor: programmatic <a>.click(), filename:', filename);
-      } else {
-        // No pending blob yet — intercept the href directly so content script can fetch it.
-        if (href.startsWith('blob:')) {
-          // Convert existing blob URL to data URL without needing _pendingBlob.
-          fetch(href).then(r => r.blob()).then(b => {
-            const reader = new FileReader();
-            reader.onload = function () { storeBlobForName(filename || href, reader.result); };
-            reader.readAsDataURL(b);
-            console.log('[AI Mail Reply] net_interceptor: fetched existing blob URL for:', filename || href);
-          }).catch(() => {});
-        }
+        console.log('[AI Mail Reply] net_interceptor: programmatic <a>.click() suppressed (plugin active), filename:', filename);
+        // Suppress the actual download — plugin will fetch PDF via the blob data URL.
+        return;
       }
-      // Suppress the actual download to prevent browser save dialog.
-      return;
+      if (href.startsWith('blob:')) {
+        fetch(href).then(r => r.blob()).then(b => {
+          const reader = new FileReader();
+          reader.onload = function () { storeBlobForName(filename || href, reader.result); };
+          reader.readAsDataURL(b);
+          console.log('[AI Mail Reply] net_interceptor: fetched existing blob URL for:', filename || href);
+        }).catch(() => {});
+        return; // suppress while plugin is active
+      }
     }
+    // Not intercepting — call original so downloads work normally everywhere.
     return _origAnchorClick.apply(this, arguments);
   };
 
-  // Helper: extract a filename from a blob: href (last resort).
+  // Helper: extract a filename from a blob: href (last resort, usually empty).
   function filenameFromBlobHref(href) { return ''; }
 
   // ─── Hook window.open (Netease opens PDF preview via window.open(signedUrl)) ──
@@ -284,10 +286,13 @@
           }).catch(() => {});
         }
       } else {
-        // http(s) URL — Netease SPA opens PDF preview as window.open(attachmentPageUrl, '_blank').
-        // Extract the real fileUrl from query params and store it. If extraction
-        // succeeds, suppress the new tab (we'll fetch the PDF ourselves). If it
-        // fails, fall through and let the browser open the tab as usual.
+        // http(s) URL — only intercept when the plugin's attachment reader is
+        // actively running (flag set by attachment_reader.js). When the user
+        // manually clicks Preview/Download we must NOT suppress the tab.
+        if (!window.__aiMailInterceptActive__) {
+          return _origWindowOpen.apply(this, arguments);
+        }
+
         const derivedName = filenameFromUrl(url);
         console.log('[AI Mail Reply] net_interceptor: window.open intercepted url:', url.slice(0, 120), 'derived filename:', derivedName);
 
@@ -311,10 +316,8 @@
         registerPdfResponse(bestUrl, '');
         if (bestUrl !== url) registerPdfResponse(url, '');
 
-        // If we successfully extracted the direct download URL, suppress the new
-        // tab — we have everything we need to fetch the PDF ourselves.
         if (extracted) {
-          console.log('[AI Mail Reply] net_interceptor: suppressing window.open (fileUrl extracted, no new tab needed)');
+          console.log('[AI Mail Reply] net_interceptor: suppressing window.open (fileUrl extracted, plugin-initiated)');
           return null;
         }
       }

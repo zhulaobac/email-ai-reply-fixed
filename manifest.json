@@ -18,7 +18,19 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*/*", "http://*/*"],
+      "matches": [
+        "https://mail.163.com/*",
+        "https://mail.126.com/*",
+        "https://mail.yeah.net/*",
+        "https://mailh.qiye.163.com/*",
+        "https://*.qiye.163.com/*",
+        "https://exmail.qq.com/*",
+        "https://mail.qq.com/*",
+        "https://mail.google.com/*",
+        "https://outlook.live.com/*",
+        "https://outlook.office.com/*",
+        "https://outlook.office365.com/*"
+      ],
       "js": ["content/net_interceptor.js"],
       "run_at": "document_start",
       "world": "MAIN"
