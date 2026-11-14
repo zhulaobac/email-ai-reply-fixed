@@ -23,6 +23,7 @@ chrome.storage.local.get(['settings', 'allowedDomains'], ({ settings = {}, allow
   if (settings.openaiKey)    document.getElementById('openai-key').value = settings.openaiKey;
   if (settings.openaiModel)  document.getElementById('openai-model').value = settings.openaiModel;
   if (settings.deepseekKey)  document.getElementById('deepseek-key').value = settings.deepseekKey;
+  if (settings.deepseekModel) document.getElementById('deepseek-model').value = settings.deepseekModel;
   if (settings.geminiKey)    document.getElementById('gemini-key').value = settings.geminiKey;
   if (settings.glmKey)       document.getElementById('glm-key').value = settings.glmKey;
   if (settings.glmModel)     document.getElementById('glm-model').value = settings.glmModel;
@@ -78,13 +79,14 @@ document.getElementById('new-domain').addEventListener('keydown', e => {
 document.getElementById('save-btn').addEventListener('click', () => {
   const settings = {
     claudeKey:    document.getElementById('claude-key').value.trim(),
-    claudeModel:  document.getElementById('claude-model').value,
+    claudeModel:  document.getElementById('claude-model').value.trim(),
     openaiKey:    document.getElementById('openai-key').value.trim(),
-    openaiModel:  document.getElementById('openai-model').value,
+    openaiModel:  document.getElementById('openai-model').value.trim(),
     deepseekKey:  document.getElementById('deepseek-key').value.trim(),
+    deepseekModel: document.getElementById('deepseek-model').value.trim(),
     geminiKey:    document.getElementById('gemini-key').value.trim(),
     glmKey:       document.getElementById('glm-key').value.trim(),
-    glmModel:     document.getElementById('glm-model').value,
+    glmModel:     document.getElementById('glm-model').value.trim(),
   };
   chrome.storage.local.set({ settings, allowedDomains }, () => {
     showToast('✅ 设置已保存，请刷新邮箱页面生效');

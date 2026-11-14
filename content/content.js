@@ -198,7 +198,7 @@
         <!-- ── 回复模式区块 ── -->
         <div id="mode-reply-section">
           <div class="ai-mail-skill-list" id="skill-list"></div>
-          <textarea id="ai-mail-instruction" rows="4" placeholder="补充要求（可选）：如"请用英文"、"语气更正式"…&#10;有已生成的邮件时，可先选中某句话，再在这里描述如何修改"></textarea>
+          <textarea id="ai-mail-instruction" rows="4" placeholder="补充要求（可选）：如"请用英文"、"语气更正式"…&#10;已生成邮件后：直接填写要求点「重新生成」可整体调整草稿；也可先选中某句话，再描述如何修改后点「优化选中」"></textarea>
           <div class="ai-mail-error" id="ai-mail-error"></div>
           <button id="ai-mail-generate-btn" style="width:100%">
             <span id="generate-btn-text">✦ 生成回复</span>
@@ -271,13 +271,14 @@
           </div>
           <div class="ai-settings-row">
             <label>模型</label>
-            <select id="setting-claude-model">
-              <option value="claude-sonnet-4-6">claude-sonnet-4-6（推荐）</option>
-              <option value="claude-opus-4-6">claude-opus-4-6（最强）</option>
-              <option value="claude-opus-4-7">claude-opus-4-7</option>
-              <option value="claude-opus-4-8">claude-opus-4-8（最新旗舰）</option>
-              <option value="claude-haiku-4-5-20251001">claude-haiku-4-5（最快）</option>
-            </select>
+            <input type="text" id="setting-claude-model" list="dl-claude-model" placeholder="选择或输入模型名">
+            <datalist id="dl-claude-model">
+              <option value="claude-sonnet-4-6" label="claude-sonnet-4-6（推荐）"></option>
+              <option value="claude-opus-4-6" label="claude-opus-4-6（最强）"></option>
+              <option value="claude-opus-4-7" label="claude-opus-4-7"></option>
+              <option value="claude-opus-4-8" label="claude-opus-4-8（最新旗舰）"></option>
+              <option value="claude-haiku-4-5-20251001" label="claude-haiku-4-5（最快）"></option>
+            </datalist>
           </div>
         </div>
 
@@ -289,13 +290,14 @@
           </div>
           <div class="ai-settings-row">
             <label>模型</label>
-            <select id="setting-openai-model">
-              <option value="gpt-5.5">gpt-5.5（最新旗舰）</option>
-              <option value="gpt-5.4">gpt-5.4（推荐）</option>
-              <option value="gpt-5.4-mini">gpt-5.4-mini（快速）</option>
-              <option value="gpt-5.3">gpt-5.3（均衡）</option>
-              <option value="gpt-4o">gpt-4o（经典）</option>
-            </select>
+            <input type="text" id="setting-openai-model" list="dl-openai-model" placeholder="选择或输入模型名">
+            <datalist id="dl-openai-model">
+              <option value="gpt-5.5" label="gpt-5.5（最新旗舰）"></option>
+              <option value="gpt-5.4" label="gpt-5.4（推荐）"></option>
+              <option value="gpt-5.4-mini" label="gpt-5.4-mini（快速）"></option>
+              <option value="gpt-5.3" label="gpt-5.3（均衡）"></option>
+              <option value="gpt-4o" label="gpt-4o（经典）"></option>
+            </datalist>
           </div>
         </div>
 
@@ -307,12 +309,14 @@
           </div>
           <div class="ai-settings-row">
             <label>模型</label>
-            <select id="setting-deepseek-model">
-              <option value="deepseek-v4-pro">deepseek-v4-pro（最强）</option>
-              <option value="deepseek-v4-flash">deepseek-v4-flash（推荐·快速）</option>
-              <option value="deepseek-chat">deepseek-chat（旧版·将废弃）</option>
-              <option value="deepseek-reasoner">deepseek-reasoner（旧版推理·将废弃）</option>
-            </select>
+            <input type="text" id="setting-deepseek-model" list="dl-deepseek-model" placeholder="选择或输入模型名">
+            <datalist id="dl-deepseek-model">
+              <option value="deepseek-flash" label="deepseek-flash（最新 4.1·推荐）"></option>
+              <option value="deepseek-v4-pro" label="deepseek-v4-pro（最强）"></option>
+              <option value="deepseek-v4-flash" label="deepseek-v4-flash（快速）"></option>
+              <option value="deepseek-chat" label="deepseek-chat（旧版）"></option>
+              <option value="deepseek-reasoner" label="deepseek-reasoner（旧版推理）"></option>
+            </datalist>
           </div>
         </div>
 
@@ -324,14 +328,15 @@
           </div>
           <div class="ai-settings-row">
             <label>模型</label>
-            <select id="setting-gemini-model">
-              <option value="gemini-3.5-flash">gemini-3.5-flash（最新旗舰）</option>
-              <option value="gemini-3.1-pro">gemini-3.1-pro（最强推理）</option>
-              <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite（高性价比）</option>
-              <option value="gemini-2.5-pro">gemini-2.5-pro（稳定版）</option>
-              <option value="gemini-2.5-flash">gemini-2.5-flash（推荐·均衡）</option>
-              <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite（最经济）</option>
-            </select>
+            <input type="text" id="setting-gemini-model" list="dl-gemini-model" placeholder="选择或输入模型名">
+            <datalist id="dl-gemini-model">
+              <option value="gemini-3.5-flash" label="gemini-3.5-flash（最新旗舰）"></option>
+              <option value="gemini-3.1-pro" label="gemini-3.1-pro（最强推理）"></option>
+              <option value="gemini-3.1-flash-lite" label="gemini-3.1-flash-lite（高性价比）"></option>
+              <option value="gemini-2.5-pro" label="gemini-2.5-pro（稳定版）"></option>
+              <option value="gemini-2.5-flash" label="gemini-2.5-flash（推荐·均衡）"></option>
+              <option value="gemini-2.5-flash-lite" label="gemini-2.5-flash-lite（最经济）"></option>
+            </datalist>
           </div>
         </div>
 
@@ -343,13 +348,14 @@
           </div>
           <div class="ai-settings-row">
             <label>模型</label>
-            <select id="setting-glm-model">
-              <option value="glm-5.1">glm-5.1（最新旗舰）</option>
-              <option value="glm-5">glm-5（强推理）</option>
-              <option value="glm-4.7">glm-4.7（推荐·均衡）</option>
-              <option value="glm-4.7-flash">glm-4.7-flash（免费·推荐）</option>
-              <option value="glm-4-flash">glm-4-flash（旧版免费）</option>
-            </select>
+            <input type="text" id="setting-glm-model" list="dl-glm-model" placeholder="选择或输入模型名">
+            <datalist id="dl-glm-model">
+              <option value="glm-5.1" label="glm-5.1（最新旗舰）"></option>
+              <option value="glm-5" label="glm-5（强推理）"></option>
+              <option value="glm-4.7" label="glm-4.7（推荐·均衡）"></option>
+              <option value="glm-4.7-flash" label="glm-4.7-flash（免费·推荐）"></option>
+              <option value="glm-4-flash" label="glm-4-flash（旧版免费）"></option>
+            </datalist>
           </div>
         </div>
 
@@ -1113,7 +1119,98 @@
 
   // ─── Generate reply ───────────────────────────────────────────────────────────
   document.getElementById('ai-mail-generate-btn').addEventListener('click', generateReply);
-  document.getElementById('ai-mail-regen-btn').addEventListener('click', generateReply);
+  document.getElementById('ai-mail-regen-btn').addEventListener('click', regenerateReply);
+
+  // "重新生成"：如果已经有草稿、并且用户填写了补充要求，则把补充要求理解为
+  // "在已有草稿基础上调整"，而不是丢掉草稿、拿原始邮件从头再生成一遍。
+  // 没有草稿或没填补充要求时，行为和"生成回复"一致（从原始邮件重新生成一版）。
+  async function regenerateReply() {
+    const resultArea = document.getElementById('ai-mail-result-area');
+    const existingDraft = document.getElementById('ai-mail-result-text').textContent.trim();
+    const extra = document.getElementById('ai-mail-instruction').value.trim();
+
+    if (!resultArea.classList.contains('visible') || !existingDraft || !extra) {
+      return generateReply();
+    }
+
+    if (typeof chrome !== 'undefined' && chrome.storage) {
+      const stored = await chrome.storage.local.get(['settings']);
+      if (stored.settings) settings = stored.settings;
+    }
+
+    const apiKey = settings[KEY_MAP[currentProvider]];
+    if (!apiKey) {
+      const anyConfigured = Object.values(KEY_MAP).some(k => !!settings[k]);
+      if (!anyConfigured) {
+        showErrorWithAction(
+          '尚未配置任何 AI 服务商，请先前往「设置」填写 API Key',
+          '去设置',
+          () => { document.querySelector('.ai-mail-tab[data-tab="settings"]').click(); }
+        );
+      } else {
+        const providerName = PROVIDER_NAMES[currentProvider] || currentProvider;
+        showError(`请先在「设置」中填写 ${providerName} 的 API Key`);
+      }
+      return;
+    }
+
+    if (!isExtensionAlive()) {
+      showError('⚠️ 插件上下文已失效，请按 F5 刷新页面后重试');
+      return;
+    }
+
+    setLoading(true);
+    clearError();
+
+    const skill = getAllSkills().find(s => s.id === currentSkillId) || DEFAULT_SKILLS[0];
+    const model = settings[MODEL_MAP[currentProvider]] || undefined;
+
+    const OUTPUT_RULE = `
+
+【重要输出规则】
+- 只输出调整后的完整邮件正文本身，不要输出任何其他内容
+- 不要输出分析、假设、补充说明、修改点罗列等
+- 不要输出"以下是调整后的邮件："之类的前缀
+- 输出语言必须使用英文（English）
+- 下面的"补充要求"只是调整说明，通常是用中文写的，这不代表要把邮件正文换成中文——除非补充要求里明确写了"翻译成中文"之类的语言切换指令，否则邮件正文必须保持英文
+- 直接以邮件称呼（如 Hi Brunel,）开头；结尾不要带任何签名、署名、名字、联系方式或客套结束语（邮箱软件会自动补全签名）`;
+
+    const systemPrompt = `${skill.prompt}\n\n你现在的任务是基于下面这封已经生成好的邮件草稿，按照补充要求对它做整体调整，而不是抛开草稿、重新写一封新邮件。草稿中没有被补充要求涉及的内容应尽量保留。${OUTPUT_RULE}`;
+
+    const userMessage = `已生成的邮件草稿：\n${existingDraft}\n\n补充要求（请据此调整上面的草稿，并输出调整后的完整邮件正文）：${extra}`;
+
+    let result;
+    try {
+      result = await chrome.runtime.sendMessage({
+        type: 'CALL_AI',
+        payload: { provider: currentProvider, apiKey, model, systemPrompt, messages: [{ role: 'user', content: userMessage }] }
+      });
+    } catch (e) {
+      setLoading(false);
+      const msg = e && e.message ? e.message : '';
+      if (msg.includes('Extension context invalidated') || msg.includes('context invalidated')) {
+        showError('⚠️ 插件上下文已失效，请按 F5 刷新页面后重试');
+      } else {
+        showError('插件通信失败，请刷新页面后重试（F5）');
+      }
+      return;
+    }
+
+    setLoading(false);
+
+    if (!result) {
+      showError('未收到 AI 响应，请刷新页面后重试（F5）');
+      return;
+    }
+    if (result.error) {
+      showError('API 错误：' + result.error);
+      return;
+    }
+
+    document.getElementById('ai-mail-result-text').textContent = result.text;
+    clearResultSelection();
+    showToast('✅ 已基于补充要求调整草稿');
+  }
   document.getElementById('ai-mail-analyze-btn').addEventListener('click', analyzeEmail);
   document.getElementById('ai-mail-reanalyze-btn').addEventListener('click', analyzeEmail);
 
@@ -1274,12 +1371,21 @@
 
     let result;
     console.log('[AI Mail Reply] sending analyze request, attachmentText length:', emailData.attachmentText.length, 'attachments:', emailData.attachments.map(a => a.name + (a.text ? '(text)' : '(no text)')));
+
+    let _aElapsed = 0;
+    const _aTimer = setInterval(() => {
+      _aElapsed++;
+      const txt = document.getElementById('analyze-btn-text');
+      if (txt) txt.innerHTML = `<div class="ai-mail-spinner"></div> 分析中… ${_aElapsed}s`;
+    }, 1000);
+
     try {
       result = await chrome.runtime.sendMessage({
         type: 'CALL_AI',
         payload: { provider: currentProvider, apiKey, model, systemPrompt, messages: [{ role: 'user', content: userMessage }] }
       });
     } catch (e) {
+      clearInterval(_aTimer);
       setAnalyzeLoading(false);
       const msg = e && e.message ? e.message : '';
       if (msg.includes('Extension context invalidated') || msg.includes('context invalidated')) {
@@ -1290,6 +1396,7 @@
       return;
     }
 
+    clearInterval(_aTimer);
     setAnalyzeLoading(false);
 
     if (!result || result.error) {
@@ -1372,11 +1479,15 @@
 - 不要输出分析、假设、匹配场景、补充说明、模板编号、破折号分隔线等
 - 不要输出"以下是为您生成的邮件："之类的前缀
 - 不要在邮件后面添加任何注释或"补充说明"
-- 直接以邮件称呼（如 Hi Brunel,）开头，以签名结尾`;
+- 回复邮件正文必须使用英文（English）回复，无论原邮件是什么语言；下面如果有"补充要求"，那通常是用中文写的修改说明，本身不代表要把回复语言换成中文——除非补充要求里明确要求切换语言（如"翻译成中文"），否则一律使用英文回复
+- 直接以邮件称呼（如 Hi Brunel,）开头；结尾不要带任何签名、署名、名字、联系方式或客套结束语（邮箱软件会自动补全签名）`;
 
-    const systemPrompt = skill.prompt + OUTPUT_RULE + (extra ? `\n\n补充要求：${extra}` : '');
+    const systemPrompt = skill.prompt + OUTPUT_RULE + (extra
+      ? `\n\n【补充要求（优先级最高）】\n${extra}\n如果以上补充要求与前面的风格设定存在冲突，请优先满足补充要求，风格设定服从于补充要求。`
+      : '');
 
-    const userMessage = `请帮我回复以下邮件，只输出邮件正文，不要任何额外说明：\n\n${emailContext}`;
+    const userMessage = `请帮我回复以下邮件，只输出邮件正文，不要任何额外说明：\n\n${emailContext}`
+      + (extra ? `\n\n【补充要求，请务必满足】：${extra}` : '');
 
     const model = settings[MODEL_MAP[currentProvider]] || undefined;
 
@@ -1530,7 +1641,7 @@
 
     // Carry the current skill so tone/language stays consistent with the original reply.
     const currentSkill = getAllSkills().find(s => s.id === currentSkillId) || DEFAULT_SKILLS[0];
-    const OUTPUT_RULE = `\n\n【重要输出规则】\n- 只输出修改后的完整邮件正文，不要任何说明或前缀\n- 保持和原邮件相同的语言（如原文是英文则继续用英文）\n- 直接以邮件称呼开头，以签名结尾`;
+    const OUTPUT_RULE = `\n\n【重要输出规则】\n- 只输出修改后的完整邮件正文，不要任何说明或前缀\n- 输出语言必须使用英文（English）\n- 下面的"修改要求"只是修改说明，通常是用中文写的，这不代表要把邮件正文换成中文——除非修改要求里明确写了"翻译成中文"之类的语言切换指令，否则邮件正文必须保持英文\n- 直接以邮件称呼开头；结尾不要带任何签名、署名、名字、联系方式或客套结束语（邮箱软件会自动补全签名）`;
 
     const systemPrompt = `${currentSkill.prompt}\n\n你现在的任务是对一封已生成的邮件草稿进行局部修改。只修改用户指定的那段文字，其他部分原样保留，输出完整修改后的邮件。${OUTPUT_RULE}`;
 
@@ -1564,8 +1675,8 @@
 
   document.getElementById('ai-mail-insert-btn').addEventListener('click', () => {
     const text = document.getElementById('ai-mail-result-text').textContent;
-    // Convert plain text to HTML, preserving line breaks
-    const textHtml = text.split('\n').map(l => `<div>${l || '<br>'}</div>`).join('');
+    // Convert plain text to HTML, preserving line breaks (use Arial font, 14px)
+    const textHtml = text.split('\n').map(l => `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">${l || '<br>'}</div>`).join('');
     // Separator line between new reply and quoted history
     const SEPARATOR = '<div><br></div><div>--------------------------------------------------</div><div><br></div>';
 
@@ -1736,15 +1847,15 @@
   document.getElementById('save-settings-btn').addEventListener('click', () => {
     settings = {
       claudeKey: document.getElementById('setting-claude-key').value.trim(),
-      claudeModel: document.getElementById('setting-claude-model').value,
+      claudeModel: document.getElementById('setting-claude-model').value.trim(),
       openaiKey: document.getElementById('setting-openai-key').value.trim(),
-      openaiModel: document.getElementById('setting-openai-model').value,
+      openaiModel: document.getElementById('setting-openai-model').value.trim(),
       deepseekKey: document.getElementById('setting-deepseek-key').value.trim(),
-      deepseekModel: document.getElementById('setting-deepseek-model').value,
+      deepseekModel: document.getElementById('setting-deepseek-model').value.trim(),
       geminiKey: document.getElementById('setting-gemini-key').value.trim(),
-      geminiModel: document.getElementById('setting-gemini-model').value,
+      geminiModel: document.getElementById('setting-gemini-model').value.trim(),
       glmKey: document.getElementById('setting-glm-key').value.trim(),
-      glmModel: document.getElementById('setting-glm-model').value,
+      glmModel: document.getElementById('setting-glm-model').value.trim(),
     };
     if (!isExtensionAlive()) { showToast('❌ 插件上下文失效，请刷新页面'); return; }
     chrome.storage.local.set({ settings }, () => {
