@@ -581,6 +581,16 @@ mark.ai-refine-highlight {
 
 .ai-mail-action-btn:hover { border-color: #353846; color: #e8eaf0; }
 
+.ai-mail-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-mail-action-btn:disabled:hover {
+  border-color: #2a2d3a;
+  color: #9ca3af;
+}
+
 .ai-mail-action-btn.primary {
   background: #6366f1;
   border-color: transparent;
@@ -588,6 +598,8 @@ mark.ai-refine-highlight {
 }
 
 .ai-mail-action-btn.primary:hover { background: #5457e5; }
+
+.ai-mail-action-btn.primary:disabled:hover { background: #6366f1; }
 
 /* Error — 唯一保留的非强调语义色（danger red） */
 .ai-mail-error {
