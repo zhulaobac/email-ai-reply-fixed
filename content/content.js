@@ -198,7 +198,7 @@
         <!-- ── 回复模式区块 ── -->
         <div id="mode-reply-section">
           <div class="ai-mail-skill-list" id="skill-list"></div>
-          <textarea id="ai-mail-instruction" rows="4" placeholder="补充要求（可选）：如"请用英文"、"语气更正式"…&#10;已生成邮件后：直接填写要求点「重新生成」可整体调整草稿；也可先选中某句话，再描述如何修改后点「优化选中」"></textarea>
+          <textarea id="ai-mail-instruction" rows="4" placeholder="补充要求（可选）：如「语气更正式」…&#10;已生成邮件后：直接填写要求点「重新生成」可整体调整草稿；也可先选中某句话，再描述如何修改后点「优化选中」"></textarea>
           <div class="ai-mail-error" id="ai-mail-error"></div>
           <button id="ai-mail-generate-btn" style="width:100%">
             <span id="generate-btn-text">✦ 生成回复</span>
@@ -221,7 +221,7 @@
         <!-- ── 分析模式区块 ── -->
         <div id="mode-analyze-section" style="display:none">
           <div class="ai-mail-skill-list" id="analyze-skill-list"></div>
-          <textarea id="ai-mail-analyze-instruction" rows="4" placeholder="补充要求（可选）：如"重点关注价格条款"、"用中文输出"…"></textarea>
+          <textarea id="ai-mail-analyze-instruction" rows="4" placeholder="补充要求（可选）：如「重点关注价格条款」、「用中文输出」…"></textarea>
           <div class="ai-mail-error" id="ai-mail-analyze-error"></div>
           <button id="ai-mail-analyze-btn" style="width:100%">
             <span id="analyze-btn-text">🔍 开始分析</span>
@@ -1676,7 +1676,8 @@
   document.getElementById('ai-mail-insert-btn').addEventListener('click', () => {
     const text = document.getElementById('ai-mail-result-text').textContent;
     // Convert plain text to HTML, preserving line breaks (use Arial font, 14px)
-    const textHtml = text.split('\n').map(l => `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">${l || '<br>'}</div>`).join('');
+    const escapeHtml = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const textHtml = text.split('\n').map(l => `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">${l ? escapeHtml(l) : '<br>'}</div>`).join('');
     // Separator line between new reply and quoted history
     const SEPARATOR = '<div><br></div><div>--------------------------------------------------</div><div><br></div>';
 
@@ -1795,15 +1796,15 @@
       customAnalyzeSkills = data.customAnalyzeSkills || [];
       // Populate settings fields
       if (settings.claudeKey) document.getElementById('setting-claude-key').value = settings.claudeKey;
-      if (settings.claudeModel) document.getElementById('setting-claude-model').value = settings.claudeModel;
+      document.getElementById('setting-claude-model').value = settings.claudeModel || 'claude-sonnet-4-6';
       if (settings.openaiKey) document.getElementById('setting-openai-key').value = settings.openaiKey;
-      if (settings.openaiModel) document.getElementById('setting-openai-model').value = settings.openaiModel;
+      document.getElementById('setting-openai-model').value = settings.openaiModel || 'gpt-4o';
       if (settings.deepseekKey) document.getElementById('setting-deepseek-key').value = settings.deepseekKey;
-      if (settings.deepseekModel) document.getElementById('setting-deepseek-model').value = settings.deepseekModel;
+      document.getElementById('setting-deepseek-model').value = settings.deepseekModel || 'deepseek-flash';
       if (settings.geminiKey) document.getElementById('setting-gemini-key').value = settings.geminiKey;
-      if (settings.geminiModel) document.getElementById('setting-gemini-model').value = settings.geminiModel;
+      document.getElementById('setting-gemini-model').value = settings.geminiModel || 'gemini-1.5-pro';
       if (settings.glmKey) document.getElementById('setting-glm-key').value = settings.glmKey;
-      if (settings.glmModel) document.getElementById('setting-glm-model').value = settings.glmModel;
+      document.getElementById('setting-glm-model').value = settings.glmModel || 'glm-4-flash';
       renderSkillList();
       renderAnalyzeSkillList();
       renderSavedSkills();
@@ -1914,6 +1915,18 @@
     } else {
       text.innerHTML = '✦ 生成回复';
     }
+
+    const regenBtn = document.getElementById('ai-mail-regen-btn');
+    const copyBtn = document.getElementById('ai-mail-copy-btn');
+    const insertBtn = document.getElementById('ai-mail-insert-btn');
+    const refineBtn = document.getElementById('ai-mail-refine-btn');
+    regenBtn.disabled = loading;
+    copyBtn.disabled = loading;
+    insertBtn.disabled = loading;
+    refineBtn.disabled = loading;
+    regenBtn.innerHTML = loading
+      ? '<div class="ai-mail-spinner"></div> 生成中...'
+      : '↺ 重新生成';
   }
 
   function setAnalyzeLoading(loading) {

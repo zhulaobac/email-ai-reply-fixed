@@ -19,14 +19,14 @@ let allowedDomains = [...DEFAULT_DOMAINS];
 // ── Load all settings ──────────────────────────────────────────────────────
 chrome.storage.local.get(['settings', 'allowedDomains'], ({ settings = {}, allowedDomains: saved }) => {
   if (settings.claudeKey)    document.getElementById('claude-key').value = settings.claudeKey;
-  if (settings.claudeModel)  document.getElementById('claude-model').value = settings.claudeModel;
+  document.getElementById('claude-model').value = settings.claudeModel || 'claude-sonnet-4-6';
   if (settings.openaiKey)    document.getElementById('openai-key').value = settings.openaiKey;
-  if (settings.openaiModel)  document.getElementById('openai-model').value = settings.openaiModel;
+  document.getElementById('openai-model').value = settings.openaiModel || 'gpt-4o';
   if (settings.deepseekKey)  document.getElementById('deepseek-key').value = settings.deepseekKey;
-  if (settings.deepseekModel) document.getElementById('deepseek-model').value = settings.deepseekModel;
+  document.getElementById('deepseek-model').value = settings.deepseekModel || 'deepseek-flash';
   if (settings.geminiKey)    document.getElementById('gemini-key').value = settings.geminiKey;
   if (settings.glmKey)       document.getElementById('glm-key').value = settings.glmKey;
-  if (settings.glmModel)     document.getElementById('glm-model').value = settings.glmModel;
+  document.getElementById('glm-model').value = settings.glmModel || 'glm-4-flash';
 
   allowedDomains = saved || [...DEFAULT_DOMAINS];
   renderDomains();
@@ -77,19 +77,22 @@ document.getElementById('new-domain').addEventListener('keydown', e => {
 
 // ── Save all ───────────────────────────────────────────────────────────────
 document.getElementById('save-btn').addEventListener('click', () => {
-  const settings = {
-    claudeKey:    document.getElementById('claude-key').value.trim(),
-    claudeModel:  document.getElementById('claude-model').value.trim(),
-    openaiKey:    document.getElementById('openai-key').value.trim(),
-    openaiModel:  document.getElementById('openai-model').value.trim(),
-    deepseekKey:  document.getElementById('deepseek-key').value.trim(),
-    deepseekModel: document.getElementById('deepseek-model').value.trim(),
-    geminiKey:    document.getElementById('gemini-key').value.trim(),
-    glmKey:       document.getElementById('glm-key').value.trim(),
-    glmModel:     document.getElementById('glm-model').value.trim(),
-  };
-  chrome.storage.local.set({ settings, allowedDomains }, () => {
-    showToast('✅ 设置已保存，请刷新邮箱页面生效');
+  chrome.storage.local.get(['settings'], ({ settings: existing = {} }) => {
+    const settings = {
+      ...existing,
+      claudeKey:    document.getElementById('claude-key').value.trim(),
+      claudeModel:  document.getElementById('claude-model').value.trim(),
+      openaiKey:    document.getElementById('openai-key').value.trim(),
+      openaiModel:  document.getElementById('openai-model').value.trim(),
+      deepseekKey:  document.getElementById('deepseek-key').value.trim(),
+      deepseekModel: document.getElementById('deepseek-model').value.trim(),
+      geminiKey:    document.getElementById('gemini-key').value.trim(),
+      glmKey:       document.getElementById('glm-key').value.trim(),
+      glmModel:     document.getElementById('glm-model').value.trim(),
+    };
+    chrome.storage.local.set({ settings, allowedDomains }, () => {
+      showToast('✅ 设置已保存，请刷新邮箱页面生效');
+    });
   });
 });
 
