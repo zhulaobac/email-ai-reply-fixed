@@ -515,7 +515,8 @@
   border: 1px solid #2a2d3a;
   border-radius: 12px;
   padding: 14px;
-  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
   color: #d1d5db;
   line-height: 1.7;
   white-space: pre-wrap;

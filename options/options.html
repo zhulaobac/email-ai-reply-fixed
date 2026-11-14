@@ -123,11 +123,14 @@
       </div>
       <div class="field">
         <label>默认模型</label>
-        <select id="claude-model">
-          <option value="claude-sonnet-4-6">claude-sonnet-4-6（推荐，速度与质量均衡）</option>
-          <option value="claude-opus-4-6">claude-opus-4-6（最强，较慢）</option>
-          <option value="claude-haiku-4-5-20251001">claude-haiku-4-5（最快，成本低）</option>
-        </select>
+        <input type="text" id="claude-model" list="dl-claude-model" placeholder="选择或输入模型名">
+        <datalist id="dl-claude-model">
+          <option value="claude-sonnet-4-6" label="claude-sonnet-4-6（推荐）"></option>
+          <option value="claude-opus-4-6" label="claude-opus-4-6（最强）"></option>
+          <option value="claude-opus-4-7" label="claude-opus-4-7"></option>
+          <option value="claude-opus-4-8" label="claude-opus-4-8（最新旗舰）"></option>
+          <option value="claude-haiku-4-5-20251001" label="claude-haiku-4-5（最快）"></option>
+        </datalist>
       </div>
       <div class="hint">获取 API Key：<a href="https://console.anthropic.com/keys" target="_blank">console.anthropic.com</a></div>
     </div>
@@ -140,11 +143,14 @@
       </div>
       <div class="field">
         <label>默认模型</label>
-        <select id="openai-model">
-          <option value="gpt-4o">gpt-4o（推荐）</option>
-          <option value="gpt-4o-mini">gpt-4o-mini（快速省钱）</option>
-          <option value="gpt-4-turbo">gpt-4-turbo</option>
-        </select>
+        <input type="text" id="openai-model" list="dl-openai-model" placeholder="选择或输入模型名">
+        <datalist id="dl-openai-model">
+          <option value="gpt-5.5" label="gpt-5.5（最新旗舰）"></option>
+          <option value="gpt-5.4" label="gpt-5.4（推荐）"></option>
+          <option value="gpt-5.4-mini" label="gpt-5.4-mini（快速）"></option>
+          <option value="gpt-5.3" label="gpt-5.3（均衡）"></option>
+          <option value="gpt-4o" label="gpt-4o（经典）"></option>
+        </datalist>
       </div>
     </div>
 
@@ -153,6 +159,17 @@
       <div class="field">
         <label>API Key</label>
         <input type="password" id="deepseek-key" placeholder="sk-...">
+      </div>
+      <div class="field">
+        <label>默认模型</label>
+        <input type="text" id="deepseek-model" list="dl-deepseek-model" placeholder="选择或输入模型名">
+        <datalist id="dl-deepseek-model">
+          <option value="deepseek-flash" label="deepseek-flash（最新 4.1·推荐）"></option>
+          <option value="deepseek-v4-pro" label="deepseek-v4-pro（最强）"></option>
+          <option value="deepseek-v4-flash" label="deepseek-v4-flash（快速）"></option>
+          <option value="deepseek-chat" label="deepseek-chat（旧版）"></option>
+          <option value="deepseek-reasoner" label="deepseek-reasoner（旧版推理）"></option>
+        </datalist>
       </div>
       <div class="hint">DeepSeek 价格极低，适合高频使用。<a href="https://platform.deepseek.com" target="_blank">获取 Key</a></div>
     </div>
@@ -174,15 +191,17 @@
       </div>
       <div class="field">
         <label>默认模型</label>
-        <select id="glm-model">
-          <option value="glm-4-flash">glm-4-flash（免费·推荐）</option>
-          <option value="glm-4-plus">glm-4-plus（旗舰，最强）</option>
-          <option value="glm-4-air">glm-4-air（均衡）</option>
-          <option value="glm-4-airx">glm-4-airx（极速）</option>
-        </select>
+        <input type="text" id="glm-model" list="dl-glm-model" placeholder="选择或输入模型名">
+        <datalist id="dl-glm-model">
+          <option value="glm-5.1" label="glm-5.1（最新旗舰）"></option>
+          <option value="glm-5" label="glm-5（强推理）"></option>
+          <option value="glm-4.7" label="glm-4.7（推荐·均衡）"></option>
+          <option value="glm-4.7-flash" label="glm-4.7-flash（免费·推荐）"></option>
+          <option value="glm-4-flash" label="glm-4-flash（旧版免费）"></option>
+        </datalist>
       </div>
       <div class="hint">
-        glm-4-flash 完全免费，适合日常邮件回复。<br>
+        glm-4.7-flash 完全免费，适合日常邮件回复。<br>
         获取 Key：<a href="https://open.bigmodel.cn/usercenter/apikeys" target="_blank">open.bigmodel.cn</a>（注册即送额度）
       </div>
     </div>
